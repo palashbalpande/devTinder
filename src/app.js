@@ -5,7 +5,7 @@ const User = require("./models/user");
 
 app.use(express.json());
 
-app.use("/signup", async (req, res) => {
+app.post("/signup", async (req, res) => {
   //creating a new instance of User model
   const user = new User(req.body);
   try {
@@ -13,6 +13,37 @@ app.use("/signup", async (req, res) => {
     res.send("User created successfully");
   } catch (error) {
     res.status(400).send("Error creating user" + error.message);
+  }
+});
+
+// Get user by email
+app.get("/user", async (req, res) => {
+  try {
+    const users = await User.findOne({ emailId: req.body.emailId });
+    if (!users) {
+      res.status(404).send("User not found");
+    } else res.send(users);
+  } catch (err) {
+    res.status(400).send("Error getting user" + err.message);
+  }
+
+  // try {
+  //   const users = await User.find({ emailId: req.body.emailId });
+  //   if(users.length === 0) {
+  //     res.status(404).send("User not found");
+  //   } else res.send(users);
+  // } catch (err) {
+  //   res.status(400).send("Error getting user" + err.message);
+  // }
+});
+
+// Feed API - GET /feed - get all the users from the databse
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    res.status(400).send("Something went wrong" + err.message);
   }
 });
 
