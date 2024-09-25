@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     default: "This is a default about the user",
   },
   skills: {
-    type: [String],
+    type: [String], 
   }
 }, {
   timestamps: true,
