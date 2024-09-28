@@ -7,7 +7,7 @@ const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
 
-    if(!token) {
+    if (!token) {
       throw new Error("Token not Valid!!!");
     }
 
@@ -16,7 +16,6 @@ const userAuth = async (req, res, next) => {
     const { _id } = decodedObj;
 
     const user = await User.findById(_id);
-
     if (!user) {
       throw new Error("User not found");
     }
