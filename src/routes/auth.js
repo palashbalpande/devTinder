@@ -11,7 +11,11 @@ authRouter.post("/signup", async (req, res) => {
     const { firstName, lastName, emailId, password } = req.body;
 
     // Encrypt the password
-    const passwordHash = await bcrypt.hash(req.body.password, 10);
+    // const passwordHash = await bcrypt.hash(req.body.password, 10);
+
+    // Generate a salt && Hash the password using the salt
+    const salt = await bcrypt.genSalt(10); 
+    const passwordHash = await bcrypt.hash(req.body.password, salt); 
 
     //creating a new instance of User model
     const user = new User({
