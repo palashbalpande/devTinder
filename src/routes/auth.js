@@ -10,10 +10,6 @@ authRouter.post("/signup", async (req, res) => {
     validateSignUpData(req);
     const { firstName, lastName, emailId, password } = req.body;
 
-    // Encrypt the password
-    // const passwordHash = await bcrypt.hash(req.body.password, 10);
-
-    // Generate a salt && Hash the password using the salt
     const salt = await bcrypt.genSalt(10); 
     const passwordHash = await bcrypt.hash(req.body.password, salt); 
 
@@ -51,7 +47,7 @@ authRouter.post("/login", async (req, res) => {
         res.cookie("token", token, {
           expires: new Date(Date.now() + 8 * 3600000),
         });
-        res.send("Login successful!!");
+        res.send(user);
       }
     }
   } catch (err) {
