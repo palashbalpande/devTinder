@@ -29,5 +29,5 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.err("Error connecting to MongoDB");
+    console.error("Error connecting to MongoDB");
   });
